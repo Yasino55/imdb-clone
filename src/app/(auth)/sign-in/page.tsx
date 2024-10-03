@@ -1,10 +1,15 @@
-import SignInForm from "@/components/SignInForm";
+import { auth } from "@/auth";
+import SignInForm from "@/components/auth/SignInForm";
+import SocialLogin from "@/components/auth/SocialLogin";
 
-const SignInPage = () => {
+const SignInPage = async () => {
   return (
-    <div className='flex flex-col justify-center items-center h-screen'>
+    <div className='flex flex-col justify-center items-center h-screen '>
       <h1 className='text-3xl my-3'>Sign In</h1>
-      <SignInForm />
+      <div className='w-[300px]'>
+        <SignInForm />
+        <SocialLogin />
+      </div>
     </div>
   );
 };
