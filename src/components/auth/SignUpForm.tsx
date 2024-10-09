@@ -16,9 +16,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { credentialLogin, handleSignUp } from "@/actions/authActions";
+import { error } from "console";
+import { useState } from "react";
 
 const SignInForm = () => {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -28,13 +31,16 @@ const SignInForm = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
+    setError(null);
     try {
       const result = await handleSignUp(values);
-      if (result.success) {
-        console.log("account created successfully");
+      if (!!result.error) {
+        setError(result.error);
+      } else {
         router.push("/sign-in");
       }
     } catch (error) {
+      setError("something went wrong!");
       console.error(error);
     }
   };
@@ -99,6 +105,7 @@ const SignInForm = () => {
           <Button type='submit' className='w-full'>
             Sign Up
           </Button>
+          <FormMessage className='text-md'>{error}</FormMessage>
         </form>
       </Form>
     </div>

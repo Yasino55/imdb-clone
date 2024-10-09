@@ -5,7 +5,6 @@ import { SignInSchema, SignUpSchema } from "../schemas";
 import * as z from "zod";
 import bcryptjs from "bcryptjs";
 import { prisma } from "@/prisma";
-import { error } from "console";
 
 export async function socialSignIn(formData: any) {
   const action = formData.get("action");
@@ -48,41 +47,6 @@ export const credentialLogin = async (values: z.infer<typeof SignInSchema>) => {
   } catch (error) {
     return { error: "An unexpected error ocurred!" };
   }
-  // throw error;
-
-  // if (!validatedFields.success) {
-  //   return { error: "Invalid fields" };
-  // }
-  // const { email, password } = validatedFields.data;
-  // try {
-  //   const user = await prisma.user.findUnique({
-  //     where: {
-  //       email,
-  //     },
-  //   });
-
-  //   console.log(user.password);
-
-  //   if (!user) {
-  //     return { error: "Invalid email or password!" };
-  //   }
-
-  //   const isPasswordValid = await bcryptjs.compare(password, user.password);
-
-  //   if (!isPasswordValid) {
-  //     return { error: "Invalid email or password!" };
-  //   }
-
-  //   const response = await signIn("credentials", {
-  //     email,
-  //     password,
-  //     redirect: false,
-  //   });
-
-  //   return response;
-  // } catch (error) {
-  //   return { error: "An unexpected error ocurred!" };
-  // }
 };
 
 export const handleSignUp = async (values: z.infer<typeof SignUpSchema>) => {
@@ -90,7 +54,7 @@ export const handleSignUp = async (values: z.infer<typeof SignUpSchema>) => {
     const parsedCredentials = SignUpSchema.safeParse(values);
 
     if (!parsedCredentials.success) {
-      return { success: false, message: "Invalid Data" };
+      return { success: false, error: "Invalid Data" };
     }
 
     const { name, email, password } = parsedCredentials.data;
@@ -105,7 +69,7 @@ export const handleSignUp = async (values: z.infer<typeof SignUpSchema>) => {
     if (existingUser) {
       return {
         success: false,
-        message: "Email already exists. Login to continue",
+        error: "Email already exists. Login to continue",
       };
     }
 
@@ -119,12 +83,12 @@ export const handleSignUp = async (values: z.infer<typeof SignUpSchema>) => {
       },
     });
 
-    return { success: true, message: "Account created successfuly." };
+    return { success: true, error: "Account created successfuly." };
   } catch (error) {
     console.log("Error creating account:", error);
     return {
       success: false,
-      message: "An unexpected error occurred. Please try again.",
+      error: "An unexpected error occurred. Please try again.",
     };
   }
 };
