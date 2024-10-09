@@ -1,6 +1,5 @@
-import { socialSignIn } from "@/authActions";
+import { socialSignIn } from "@/actions/authActions";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 

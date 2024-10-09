@@ -9,49 +9,57 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { SignInSchema } from "@/schemas";
+import { SignUpSchema } from "@/schemas";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { credentialLogin } from "@/actions/authActions";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { credentialLogin, handleSignUp } from "@/actions/authActions";
 
 const SignInForm = () => {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-
-  const form = useForm<z.infer<typeof SignInSchema>>({
-    resolver: zodResolver(SignInSchema),
+  const form = useForm<z.infer<typeof SignUpSchema>>({
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
-
-  const handleSubmit = async (values: z.infer<typeof SignInSchema>) => {
-    setError(null);
-
+  const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
     try {
-      const response = await credentialLogin(values);
-
-      if (!!response.error) {
-        setError(response.error);
-      } else {
-        router.push("/");
+      const result = await handleSignUp(values);
+      if (result.success) {
+        console.log("account created successfully");
+        router.push("/sign-in");
       }
     } catch (error) {
-      console.log(error);
-      setError("Something went wrong!");
+      console.error(error);
     }
   };
+
   return (
     <div>
       <Form {...form}>
-        <div className='text-red-500 text-sm font-light'>{error}</div>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
           <FormField
+            control={form.control}
+            name='name'
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder='John' type='text' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+          <FormField
+            control={form.control}
             name='email'
             render={({ field }) => {
               return (
@@ -70,6 +78,7 @@ const SignInForm = () => {
             }}
           />
           <FormField
+            control={form.control}
             name='password'
             render={({ field }) => {
               return (
@@ -88,7 +97,7 @@ const SignInForm = () => {
             }}
           />
           <Button type='submit' className='w-full'>
-            Login
+            Sign Up
           </Button>
         </form>
       </Form>

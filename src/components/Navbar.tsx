@@ -23,9 +23,14 @@ const Navbar = async () => {
             <Button type='submit'>Sign Out</Button>
           </form>
         ) : (
-          <Link href='/sign-in'>
-            <Button>Sign In</Button>
-          </Link>
+          <div className='space-x-3'>
+            <Link href='/sign-in'>
+              <Button>Sign In</Button>
+            </Link>
+            <Link href='/sign-up'>
+              <Button variant={"outline"}>Sign Up</Button>
+            </Link>
+          </div>
         )}
       </div>
     </div>

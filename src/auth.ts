@@ -2,10 +2,13 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
-import { getUserByEmail } from "./data/users";
-import { LoginSchema } from "./schemas";
+import { SignInSchema } from "./schemas";
+import { prisma } from "@/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import bcryptjs from "bcryptjs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
@@ -14,24 +17,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Github,
     Credentials({
       async authorize(credentials) {
-        const validatedFields = LoginSchema.safeParse(credentials);
-
-        if (validatedFields.success) {
-          const { email, password } = validatedFields.data;
-
-          const user = await getUserByEmail(email);
-          if (!user || !user.password) return null;
-
-          const passwordMatch = user.password === password;
-          if (passwordMatch) {
-            return {
-              email: user.email,
-              password: user.password,
-            };
-          }
+        const validatedFields = SignInSchema.safeParse(credentials);
+        if (!validatedFields.success) {
+          return null;
         }
-        return null;
+        const { email, password } = validatedFields.data;
+
+        return {
+          email,
+          password,
+        };
       },
     }),
   ],
+  pages: {
+    signIn: "/sign-in",
+  },
 });

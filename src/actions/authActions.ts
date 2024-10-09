@@ -1,0 +1,130 @@
+"use server";
+
+import { signIn } from "@/auth";
+import { SignInSchema, SignUpSchema } from "../schemas";
+import * as z from "zod";
+import bcryptjs from "bcryptjs";
+import { prisma } from "@/prisma";
+import { error } from "console";
+
+export async function socialSignIn(formData: any) {
+  const action = formData.get("action");
+  await signIn(action, { redirectTo: "/" });
+}
+
+export const credentialLogin = async (values: z.infer<typeof SignInSchema>) => {
+  const validatedFields = SignInSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "invalid fields" };
+  }
+
+  const { email, password } = validatedFields.data;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    return { error: "Invalid email or password!" };
+  }
+
+  const isPasswordValid = await bcryptjs.compare(password, user.password);
+
+  if (!isPasswordValid) {
+    return { error: "Invalid email or password!" };
+  }
+
+  try {
+    const response = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    return response;
+  } catch (error) {
+    return { error: "An unexpected error ocurred!" };
+  }
+  // throw error;
+
+  // if (!validatedFields.success) {
+  //   return { error: "Invalid fields" };
+  // }
+  // const { email, password } = validatedFields.data;
+  // try {
+  //   const user = await prisma.user.findUnique({
+  //     where: {
+  //       email,
+  //     },
+  //   });
+
+  //   console.log(user.password);
+
+  //   if (!user) {
+  //     return { error: "Invalid email or password!" };
+  //   }
+
+  //   const isPasswordValid = await bcryptjs.compare(password, user.password);
+
+  //   if (!isPasswordValid) {
+  //     return { error: "Invalid email or password!" };
+  //   }
+
+  //   const response = await signIn("credentials", {
+  //     email,
+  //     password,
+  //     redirect: false,
+  //   });
+
+  //   return response;
+  // } catch (error) {
+  //   return { error: "An unexpected error ocurred!" };
+  // }
+};
+
+export const handleSignUp = async (values: z.infer<typeof SignUpSchema>) => {
+  try {
+    const parsedCredentials = SignUpSchema.safeParse(values);
+
+    if (!parsedCredentials.success) {
+      return { success: false, message: "Invalid Data" };
+    }
+
+    const { name, email, password } = parsedCredentials.data;
+
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    // console.log(existingUser);
+
+    if (existingUser) {
+      return {
+        success: false,
+        message: "Email already exists. Login to continue",
+      };
+    }
+
+    const hashedPassword = await bcryptjs.hash(password, 10);
+
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    return { success: true, message: "Account created successfuly." };
+  } catch (error) {
+    console.log("Error creating account:", error);
+    return {
+      success: false,
+      message: "An unexpected error occurred. Please try again.",
+    };
+  }
+};
