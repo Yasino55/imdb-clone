@@ -5,6 +5,7 @@ import { SignInSchema, SignUpSchema } from "../schemas";
 import * as z from "zod";
 import bcryptjs from "bcryptjs";
 import { prisma } from "@/prisma";
+import { error } from "console";
 
 export async function socialSignIn(formData: any) {
   const action = formData.get("action");
@@ -64,7 +65,6 @@ export const handleSignUp = async (values: z.infer<typeof SignUpSchema>) => {
         email,
       },
     });
-    // console.log(existingUser);
 
     if (existingUser) {
       return {
@@ -83,7 +83,7 @@ export const handleSignUp = async (values: z.infer<typeof SignUpSchema>) => {
       },
     });
 
-    return { success: true, error: "Account created successfuly." };
+    return { success: true };
   } catch (error) {
     console.log("Error creating account:", error);
     return {

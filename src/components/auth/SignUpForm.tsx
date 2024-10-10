@@ -16,7 +16,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { credentialLogin, handleSignUp } from "@/actions/authActions";
-import { error } from "console";
 import { useState } from "react";
 
 const SignInForm = () => {
@@ -37,7 +36,12 @@ const SignInForm = () => {
       if (!!result.error) {
         setError(result.error);
       } else {
-        router.push("/sign-in");
+        const response = await credentialLogin(values);
+        if (!!response.error) {
+          console.log(error);
+        } else {
+          router.push("/");
+        }
       }
     } catch (error) {
       setError("something went wrong!");
