@@ -2,7 +2,7 @@ export const GET = async () => {
   const options = {
     headers: {
       accept: "application/json",
-      Authorization: process.env.TMDB_BEARER_KEY,
+      Authorization: process.env.TMDB_BEARER_KEY as string,
       cache: "no-store",
     },
   };

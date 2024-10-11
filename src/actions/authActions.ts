@@ -27,7 +27,7 @@ export const credentialLogin = async (values: z.infer<typeof SignInSchema>) => {
     },
   });
 
-  if (!user) {
+  if (!user || !user.password) {
     return { error: "Invalid email or password!" };
   }
 
