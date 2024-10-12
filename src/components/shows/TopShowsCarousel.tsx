@@ -13,7 +13,7 @@ const TopShowsCarousel = async () => {
         <h3 className='text-muted-foreground text-xl font-semibold'>
           Top 10 Shows This Week
         </h3>
-        <Link className='text-primary underline' href='/shows'>
+        <Link className='text-primary underline' href='/top-trending-shows'>
           View All
         </Link>
       </div>

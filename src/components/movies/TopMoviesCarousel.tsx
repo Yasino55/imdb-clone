@@ -13,7 +13,7 @@ const TopMoviesCarousel = async () => {
         <h3 className='text-muted-foreground text-xl font-semibold'>
           Top 10 Movies This Week
         </h3>
-        <Link className='text-primary underline' href='/movies'>
+        <Link className='text-primary underline' href='/top-trending-movies'>
           View All
         </Link>
       </div>
