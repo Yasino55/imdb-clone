@@ -7,7 +7,7 @@ import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 // import TrailerButton from "./TrailerButton";
 import { Button } from "./ui/button";
-import CardSkeleton from "@/components/CardSkeleton";
+import CardSkeleton from "@/components/skeletons/CardSkeleton";
 
 interface Props {
   item: {
@@ -25,7 +25,7 @@ const CardInfo = ({ item }: Props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const link =
-    item.media_type === "movie" ? `/movies/${item.id}` : `/shows/${item.id}`;
+    item.media_type === "movie" ? `/movie/${item.id}` : `/show/${item.id}`;
 
   return (
     <Card className='w-[200px] h-[500px] bg-secondary' key={item.id}>
