@@ -39,19 +39,19 @@ export async function fetchTopShows() {
 
 export async function fetchSingleInfo(id: string, type: string) {
   try {
-    const movie = await fetch(`${apiDomain}/${type}/${id}`, {
+    const res = await fetch(`${apiDomain}/${type}/${id}`, {
       cache: "no-store",
       method: "GET",
     });
 
-    if (!movie.ok) {
+    if (!res.ok) {
       throw new Error("failed to fetch data");
     }
 
-    const data = await movie.json();
+    const data = await res.json();
     return data.tv_results[0] || data.movie_results[0];
   } catch (error) {
-    console.error("Error fetchin data:", { status: 400 });
+    console.error("Error fetching data:", { status: 400 });
     return null;
   }
 }

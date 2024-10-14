@@ -9,9 +9,8 @@ interface Params {
   params: Props;
 }
 
-const MoviePage = async ({ params }: Params) => {
-  const movie = await fetchSingleInfo(params.id, "movie");
-
-  return <SingleInfo item={movie} />;
+const ShowPage = async ({ params }: Params) => {
+  const show = await fetchSingleInfo(params.id, "show");
+  return <SingleInfo item={show} />;
 };
-export default MoviePage;
+export default ShowPage;

@@ -9,19 +9,19 @@ export const GET = async (request: any, { params }: any) => {
     },
   };
 
-  const externalId = await getExternalId("movie", params.id);
+  const externalId = await getExternalId("tv", params.id);
 
   try {
-    const movie = await fetch(
+    const show = await fetch(
       `https://api.themoviedb.org/3/find/${externalId}?external_source=wikidata_id`,
       options
     );
 
-    if (!movie.ok) {
+    if (!show.ok) {
       throw new Error("Failed to fetch data");
     }
 
-    const data = await movie.json();
+    const data = await show.json();
     return new Response(JSON.stringify(data), {
       status: 200,
     });
