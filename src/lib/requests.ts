@@ -86,6 +86,24 @@ export async function getExternalId(type: string, id: string) {
   }
 }
 
+export async function handleSearch(query: string, path: string) {
+  try {
+    const res = await fetch(`${apiDomain}/${path}?name=${query}`, {
+      cache: "no-store",
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      throw new Error("failed to fetch data");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetchin data:", error);
+  }
+}
+
 export function posterFormat(poster_path: string) {
   const imageUrl = `http://image.tmdb.org/t/p/w500${poster_path}`;
   return imageUrl;

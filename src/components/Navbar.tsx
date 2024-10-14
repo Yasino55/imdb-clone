@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { signOut } from "@/auth";
 import { auth } from "@/auth";
+import SearchInput from "./SearchInput";
 
 const Navbar = async () => {
   const session = await auth();
@@ -13,6 +14,7 @@ const Navbar = async () => {
         </div>
       </Link>
       <div className='flex'>
+        <SearchInput />
         {session ? (
           <form
             action={async () => {
