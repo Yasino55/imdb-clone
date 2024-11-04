@@ -6,6 +6,7 @@ import SearchInput from "./SearchInput";
 
 const Navbar = async () => {
   const session = await auth();
+  // console.log(session);
   return (
     <div className='flex justify-between mt-3'>
       <Link href='/'>

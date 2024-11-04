@@ -8,6 +8,7 @@ import Link from "next/link";
 // import TrailerButton from "./TrailerButton";
 import { Button } from "./ui/button";
 import CardSkeleton from "@/components/skeletons/CardSkeleton";
+import AddToWatchListButton from "./AddToWatchListButton";
 
 interface Props {
   item: {
@@ -59,8 +60,9 @@ const CardInfo = ({ item }: Props) => {
               </CardTitle>
             </Link>
           </CardContent>
-          <CardFooter className='mb-[-5px]'>
+          <CardFooter className='flex justify-between mb-[-5px]'>
             <Button>Trailer</Button>
+            <AddToWatchListButton item={item} />
             {/* <TrailerButton item={item} /> */}
           </CardFooter>
         </>

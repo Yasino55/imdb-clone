@@ -1,3 +1,5 @@
+import { auth } from "@/auth";
+
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 
 // Fetch Top movies of the current week

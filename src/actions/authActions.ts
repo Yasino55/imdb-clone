@@ -5,7 +5,6 @@ import { SignInSchema, SignUpSchema } from "../schemas";
 import * as z from "zod";
 import bcryptjs from "bcryptjs";
 import { prisma } from "@/prisma";
-import { error } from "console";
 
 export async function socialSignIn(formData: any) {
   const action = formData.get("action");
