@@ -7,6 +7,7 @@ import Autoplay from "embla-carousel-autoplay";
 
 interface Props {
   backdrop_path: string;
+  id: string;
 }
 
 const Hero = () => {
@@ -53,7 +54,7 @@ const Hero = () => {
         <Carousel opts={{ loop: true }} plugins={[Autoplay({ delay: 4000 })]}>
           <CarouselContent>
             {posters.map((poster: Props) => (
-              <CarouselItem>
+              <CarouselItem key={poster.id}>
                 <Image
                   src={posterFormat(poster.backdrop_path)}
                   alt='Poster'

@@ -1,6 +1,7 @@
 import { getExternalId } from "@/lib/requests";
 
-export const GET = async (request: any, { params }: any) => {
+export const GET = async (request: any, props: any) => {
+  const params = await props.params;
   const options = {
     headers: {
       accept: "application/json",

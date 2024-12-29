@@ -6,10 +6,11 @@ interface Props {
 }
 
 interface Params {
-  params: Props;
+  params: Promise<Props>;
 }
 
-const ShowPage = async ({ params }: Params) => {
+const ShowPage = async (props: Params) => {
+  const params = await props.params;
   const show = await fetchSingleInfo(params.id, "show");
   return <SingleInfo item={show} />;
 };

@@ -6,10 +6,11 @@ interface Props {
 }
 
 interface Params {
-  params: Props;
+  params: Promise<Props>;
 }
 
-const MoviePage = async ({ params }: Params) => {
+const MoviePage = async (props: Params) => {
+  const params = await props.params;
   const movie = await fetchSingleInfo(params.id, "movie");
 
   return <SingleInfo item={movie} />;
