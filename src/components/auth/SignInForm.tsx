@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { credentialLogin } from "@/actions/authActions";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 const SignInForm = () => {
   const router = useRouter();

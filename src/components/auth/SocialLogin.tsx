@@ -29,13 +29,8 @@ const SocialLogin = () => {
 
   return (
     <>
-      <form action={socialSignIn} className='mt-4 flex'>
-        <Button
-          type='submit'
-          name='action'
-          value='google'
-          className='mr-3 w-full'
-        >
+      <form action={socialSignIn} className='mt-4 flex gap-3'>
+        <Button type='submit' name='action' value='google' className='w-full'>
           <FaGoogle className='mr-2' />
           Google
         </Button>

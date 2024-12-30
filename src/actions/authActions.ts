@@ -6,8 +6,13 @@ import * as z from "zod";
 import bcryptjs from "bcryptjs";
 import { prisma } from "@/prisma";
 
-export async function socialSignIn(formData: any) {
+export async function socialSignIn(formData: FormData) {
   const action = formData.get("action");
+
+  if (typeof action !== "string") {
+    throw new Error("Invalid form data: action must be a string.");
+  }
+
   await signIn(action, { redirectTo: "/" });
 }
 
