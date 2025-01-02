@@ -1,7 +1,9 @@
-import { favorite } from "@/lib/dbRequests";
+"use client";
+
 import { useEffect, useState } from "react";
 import { FaCheck, FaPlus } from "react-icons/fa6";
-import { set } from "zod";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   item: {
@@ -17,10 +19,12 @@ interface Props {
 
 const WatchListButton = ({ item }: Props) => {
   const [isWatchList, setIsWatchList] = useState(false);
-  const [error, setError] = useState("");
+  const { data: session } = useSession();
+  const router = useRouter();
 
-  // Fetch watchlist status when the component mounts
+  // Fetch watch list status when the component mounts
   useEffect(() => {
+    if (!session) return;
     const checkWatchlist = async () => {
       try {
         const response = await fetch(`/api/watch-list?itemId=${item.id}`, {
@@ -33,24 +37,21 @@ const WatchListButton = ({ item }: Props) => {
         if (response.ok) {
           const data = await response.json();
           setIsWatchList(data.isInWatchList);
-        } else {
-          const errorData = await response.json();
-          if (response.status === 401) {
-            setError("Please log in to view your watchlist.");
-          } else {
-            setError(errorData.message || "Error checking watchlist status.");
-          }
         }
       } catch (error) {
-        console.error("Error checking watchlist status:", error);
+        console.error("Error checking watch list status:", error);
       }
     };
 
     checkWatchlist();
-  }, [item.id]);
+  }, [item.id, session]);
 
   const handleWatchlist = async () => {
     try {
+      if (!session) {
+        router.push("/sign-in");
+        return;
+      }
       if (!isWatchList) {
         const response = await fetch("/api/watch-list", {
           method: "POST",
@@ -64,11 +65,6 @@ const WatchListButton = ({ item }: Props) => {
         });
         if (response.ok) {
           setIsWatchList(true);
-          setError("");
-        } else {
-          const errorData = await response.json();
-          setError(errorData.message);
-          // console.log(error);
         }
       } else {
         const response = await fetch("/api/watch-list", {
@@ -84,11 +80,11 @@ const WatchListButton = ({ item }: Props) => {
         if (response.ok) {
           setIsWatchList(false);
         } else {
-          console.error("Error removing from watchlist.");
+          console.error("Error removing from watch list.");
         }
       }
     } catch (error) {
-      console.error("Error updating watchlist.");
+      console.error("Error updating watch list.", error);
     }
   };
 

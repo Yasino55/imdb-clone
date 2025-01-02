@@ -50,7 +50,8 @@ export const credentialLogin = async (values: z.infer<typeof SignInSchema>) => {
 
     return response;
   } catch (error) {
-    return { error: "An unexpected error ocurred!" };
+    console.log("Error signing in:", error);
+    return { error: "An unexpected error occurred!" };
   }
 };
 

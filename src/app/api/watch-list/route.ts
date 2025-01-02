@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
 
   if (!session || !session.user) {
     return NextResponse.json(
-      { message: "You must be logged in to view the watchlist." },
+      { message: "You must be logged in to view the watch list." },
       { status: 401 }
     );
   } else {
@@ -16,13 +16,14 @@ export async function GET(req: NextRequest) {
       const itemId = req.nextUrl.searchParams.get("itemId");
 
       if (!itemId) {
+        // return {error: "Something went wrong try again later please."}
         return NextResponse.json(
           { message: "Item ID is required." },
           { status: 400 }
         );
       }
 
-      // Check if the item is in the watchlist
+      // Check if the item is in the watch list
       const existingWatchList = await prisma.favorite.findFirst({
         where: {
           userId: user.id,
@@ -34,9 +35,9 @@ export async function GET(req: NextRequest) {
 
       return NextResponse.json({ isInWatchList }, { status: 200 });
     } catch (error) {
-      console.error("Error checking watchlist status:", error);
+      console.error("Error checking watch list status:", error);
       return NextResponse.json(
-        { error: "Internal server error while checking watchlist status." },
+        { error: "Internal server error while checking watch list status." },
         { status: 500 }
       );
     }
@@ -66,7 +67,7 @@ export async function POST(req: NextRequest) {
 
     if (existingWatchList) {
       return NextResponse.json(
-        { Message: "Already in watchlist." },
+        { Message: "Already in watch list." },
         { status: 400 }
       );
     }
@@ -80,9 +81,9 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json(watchList, { status: 200 });
   } catch (error) {
-    console.error("Error adding to watchlist:", error);
+    console.error("Error adding to watch list:", error);
     return NextResponse.json(
-      { error: "Error adding to watchlist" },
+      { error: "Error adding to watch list" },
       { status: 500 }
     );
   }
@@ -93,10 +94,11 @@ export async function DELETE(req: NextRequest) {
     const session = await auth();
 
     if (!session) {
-      return NextResponse.json(
-        { message: "You must be logged in." },
-        { status: 401 }
-      );
+      return { error: "You must be logged in to remove from watch list." };
+      // return NextResponse.json(
+      //   { message: "You must be logged in." },
+      //   { status: 401 }
+      // );
     }
 
     const { user } = session;
@@ -110,13 +112,13 @@ export async function DELETE(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Removed from watchlist." },
+      { message: "Removed from watch list." },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error removing from watchlist:", error);
+    console.error("Error removing from watch list:", error);
     return NextResponse.json(
-      { message: "Error removing from watchlist" },
+      { message: "Error removing from watch list" },
       { status: 500 }
     );
   }
