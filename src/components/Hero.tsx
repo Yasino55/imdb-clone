@@ -1,9 +1,10 @@
 "use client";
-import { fetchTopMovies, fetchTopShows, posterFormat } from "@/lib/requests";
+import { backdropFormat, fetchTopMovies, fetchTopShows } from "@/lib/requests";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { Skeleton } from "./ui/skeleton";
 
 interface Props {
   backdrop_path: string;
@@ -12,6 +13,7 @@ interface Props {
 
 const Hero = () => {
   const [posters, setPosters] = useState<Props[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,35 +43,30 @@ const Hero = () => {
   };
 
   return (
-    <div className='flex gap-4 h-[500px] relative mb-20 mt-5'>
-      <div className='flex flex-col justify-center items-center w-full z-50 '>
-        <h2 className='text-3xl font-bold mb-2'>Welcome To IMDb</h2>
-        <p className='text-center font-semibold text-muted-foreground'>
-          Discover the ultimate destination for movie buffs and TV enthusiasts
-          alike. Explore our vast collection of films and shows, all in one
-          place.
-        </p>
-      </div>
-      <div className='absolute'>
+    <>
+      {loading && (
+        <Skeleton className='h-[200px] md:h-[300px] lg:h-[400px] xl:h-[500px] mb-20 mt-5'></Skeleton>
+      )}
+      <div className='flex gap-4 relative mb-20 mt-5'>
         <Carousel opts={{ loop: true }} plugins={[Autoplay({ delay: 4000 })]}>
           <CarouselContent>
             {posters.map((poster: Props) => (
               <CarouselItem key={poster.id}>
                 <Image
-                  src={posterFormat(poster.backdrop_path)}
+                  src={backdropFormat(poster.backdrop_path)}
                   alt='Poster'
                   height={0}
-                  width={0}
-                  sizes='100vw'
-                  className='w-full h-[475px]'
+                  width={1280}
+                  style={{ objectFit: "cover" }}
+                  className='h-[200px] md:h-[300px] lg:h-[400px] xl:h-[500px]'
+                  onLoad={() => setLoading(false)}
                 />
               </CarouselItem>
             ))}
           </CarouselContent>
         </Carousel>
-        <div className='absolute inset-0 bg-black bg-opacity-60 backdrop-blur-xs'></div>
       </div>
-    </div>
+    </>
   );
 };
 export default Hero;

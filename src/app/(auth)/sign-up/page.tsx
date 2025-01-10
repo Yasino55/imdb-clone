@@ -12,7 +12,7 @@ const SignInPage = async () => {
           <p className='font-semibold text-muted-foreground'>
             Already have an account?
             <Link href='/sign-in' className='underline ml-1'>
-              Sign in here
+              Sign In
             </Link>
           </p>
         </div>

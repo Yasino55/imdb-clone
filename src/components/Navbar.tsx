@@ -3,10 +3,12 @@ import { Button } from "./ui/button";
 import { signOut } from "@/auth";
 import { auth } from "@/auth";
 import SearchInput from "./SearchInput";
+import NavbarButtons from "./header/NavbarButtons";
+import NavbarDropdown from "./header/NavbarDropdown";
 
 const Navbar = async () => {
   const session = await auth();
-  // console.log(session);
+
   return (
     <div className='flex justify-between mt-3'>
       <Link href='/'>
@@ -14,27 +16,14 @@ const Navbar = async () => {
           <h1 className='text-xl font-bold'>IMDb</h1>
         </div>
       </Link>
-      <div className='flex'>
+      <div className='flex gap-3'>
         <SearchInput />
-        {session ? (
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/" });
-            }}
-          >
-            <Button type='submit'>Sign Out</Button>
-          </form>
-        ) : (
-          <div className='space-x-3'>
-            <Link href='/sign-in'>
-              <Button>Sign In</Button>
-            </Link>
-            <Link href='/sign-up'>
-              <Button variant={"outline"}>Sign Up</Button>
-            </Link>
-          </div>
-        )}
+        <div className='hidden md:block'>
+          <NavbarButtons />
+        </div>
+        <div className='md:hidden'>
+          <NavbarDropdown />
+        </div>
       </div>
     </div>
   );

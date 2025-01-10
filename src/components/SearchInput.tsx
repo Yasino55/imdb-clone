@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import SearchResults from "@/components/SearchResults";
 
-type suggestions = {
+type Suggestions = {
   id: number;
   title?: string;
   name?: string;
-  vote_average: number;
+  vote_average?: number;
   poster_path: string;
   media_type?: string;
   release_date?: string;
@@ -17,14 +17,13 @@ type suggestions = {
 
 const SearchInput = () => {
   const [input, setInput] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<suggestions[]>([]);
+  const [suggestions, setSuggestions] = useState<Suggestions[]>([]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
       if (input.trim() !== "") {
-        const shows = await handleSearch(input, "search-shows");
-        const movies = await handleSearch(input, "search-movies");
-        const data = [...shows, ...movies];
+        const data = await handleSearch(input);
+
         setSuggestions(data);
       } else {
         setSuggestions([]);
@@ -39,7 +38,7 @@ const SearchInput = () => {
   };
 
   return (
-    <div className='relative z-50'>
+    <div className='relative'>
       <Input
         className=''
         placeholder='Search...'
@@ -47,9 +46,9 @@ const SearchInput = () => {
         onChange={(e) => handleChange(e.target.value)}
       />
       {suggestions.length > 0 && (
-        <div className='border solid rounded-md h-[400px] w-full mt-2 absolute overflow-y-scroll overflow-x-hidden bg-secondary'>
+        <div className='border solid rounded-md h-[500px] md:w-[370px] w-[220px] mt-2 overflow-y-scroll overflow-x-hidden bg-secondary absolute z-20'>
           {suggestions.map((item) => (
-            <SearchResults item={item} />
+            <SearchResults key={item.id} item={item} />
           ))}
         </div>
       )}

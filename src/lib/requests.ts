@@ -35,7 +35,7 @@ export async function fetchTopShows() {
     const movies = await res.json();
     return movies.results;
   } catch (error) {
-    console.error("Error fetchin data:", { status: 400 });
+    console.error("Error fetching data:", { status: 400 });
   }
 }
 
@@ -88,7 +88,7 @@ export async function getExternalId(type: string, id: string) {
   }
 }
 
-export async function handleSearch(query: string, path: string) {
+export async function searchMoviesAndShows(query: string, path: string) {
   try {
     const res = await fetch(`${apiDomain}/${path}?name=${query}`, {
       cache: "no-store",
@@ -102,12 +102,36 @@ export async function handleSearch(query: string, path: string) {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.error("Error fetchin data:", error);
+    console.error("Error fetching data:", error);
+  }
+}
+
+export async function handleSearch(query: string) {
+  try {
+    const res = await fetch(`${apiDomain}/search?name=${query}`, {
+      cache: "no-store",
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      throw new Error("failed to fetch data");
+    }
+
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
 }
 
 export function posterFormat(poster_path: string) {
   const imageUrl = `http://image.tmdb.org/t/p/w500${poster_path}`;
+  return imageUrl;
+}
+
+export function backdropFormat(backdrop_path: string) {
+  const imageUrl = `http://image.tmdb.org/t/p/w1280${backdrop_path}`;
   return imageUrl;
 }
 

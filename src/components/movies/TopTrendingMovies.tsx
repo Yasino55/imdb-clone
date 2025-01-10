@@ -16,7 +16,7 @@ const TopTrendingMovies = async () => {
 
   return (
     <div className=''>
-      <h2 className='text-2xl font-semibold mt-20'>
+      <h2 className='text-xl font-semibold mt-20 text-center md:text-2xl'>
         Top Trending Movies This Week
       </h2>
 

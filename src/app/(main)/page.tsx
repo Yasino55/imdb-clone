@@ -6,7 +6,7 @@ const home = () => {
   return (
     <div>
       <Hero />
-      <div className='container space-y-20 mb-10'>
+      <div className='space-y-20 mb-10'>
         <TopMoviesCarousel />
         <TopShowsCarousel />
       </div>

@@ -23,14 +23,14 @@ interface Props {
 }
 
 const CardInfo = ({ item }: Props) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(true);
 
   const link =
     item.media_type === "movie" ? `/movie/${item.id}` : `/show/${item.id}`;
 
   return (
-    <Card className='w-[200px] h-[450px] bg-secondary' key={item.id}>
-      {!imageLoaded && <CardSkeleton />}
+    <Card className='bg-secondary' key={item.id}>
+      {imageLoaded && <CardSkeleton />}
       <Link href={link}>
         <Image
           src={posterFormat(item.poster_path)}
@@ -38,35 +38,32 @@ const CardInfo = ({ item }: Props) => {
           width={0}
           height={0}
           sizes='100vw'
-          className={`w-full h-[300px] rounded-t-md mb-3 transition-opacity duration-500 ${
-            imageLoaded ? "opacity-100" : "opacity-0"
+          className={`w-full rounded-t-md mb-3 transition-opacity duration-500 ${
+            !imageLoaded ? "opacity-100" : "opacity-0"
           }`}
-          onLoad={() => setImageLoaded(true)}
+          onLoad={() => setImageLoaded(false)}
         />
       </Link>
-      {imageLoaded && (
-        <>
-          <CardContent>
-            <div className='flex items-center mb-1'>
-              <FaStar className='fill-yellow-400 mr-2' />
-              <p className='mt-1 mr-2'>{formatRating(item.vote_average)}</p>
-              <p className='mt-1 text-muted-foreground text-sm'>
-                ({item.vote_count})
-              </p>
-            </div>
-            <Link href={link}>
-              <CardTitle className='text-md truncate'>
-                {item.title || item.name}
-              </CardTitle>
-            </Link>
-          </CardContent>
-          <CardFooter className='flex justify-between mb-[-5px]'>
-            <Button>Trailer</Button>
-            <AddToWatchListButton item={item} />
-            {/* <TrailerButton item={item} /> */}
-          </CardFooter>
-        </>
-      )}
+
+      <CardContent className='w-[200px]'>
+        <div className='flex items-center mb-1'>
+          <FaStar className='fill-yellow-400 mr-2' />
+          <p className='mt-1 mr-2'>{formatRating(item.vote_average)}</p>
+          <p className='mt-1 text-muted-foreground text-sm'>
+            ({item.vote_count})
+          </p>
+        </div>
+        <Link href={link}>
+          <CardTitle className='text-md truncate'>
+            {item.title || item.name}
+          </CardTitle>
+        </Link>
+      </CardContent>
+      <CardFooter className='flex justify-between mb-[-5px]'>
+        <Button>Trailer</Button>
+        <AddToWatchListButton item={item} />
+        {/* <TrailerButton item={item} /> */}
+      </CardFooter>
     </Card>
   );
 };
