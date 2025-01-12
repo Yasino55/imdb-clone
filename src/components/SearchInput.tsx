@@ -18,6 +18,7 @@ type Suggestions = {
 const SearchInput = () => {
   const [input, setInput] = useState<string>("");
   const [suggestions, setSuggestions] = useState<Suggestions[]>([]);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
@@ -37,15 +38,24 @@ const SearchInput = () => {
     setInput(value);
   };
 
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setIsFocused(false);
+    }
+  };
+
   return (
-    <div className='relative'>
+    <div className='relative' onBlur={handleBlur}>
       <Input
         className=''
         placeholder='Search...'
         value={input}
         onChange={(e) => handleChange(e.target.value)}
+        onFocus={handleFocus}
+        // onBlur={handleBlur}
       />
-      {suggestions.length > 0 && (
+      {isFocused && suggestions.length > 0 && (
         <div className='border solid rounded-md h-[500px] md:w-[370px] w-[220px] mt-2 overflow-y-scroll overflow-x-hidden bg-secondary absolute z-20'>
           {suggestions.map((item) => (
             <SearchResults key={item.id} item={item} />

@@ -20,9 +20,13 @@ interface Props {
 
 const SearchResults = ({ item }: Props) => {
   const link =
-    item.media_type === "movie" ? `/movie/${item.id}` : `/show/${item.id}`;
+    item.media_type === "movie"
+      ? `/movie/${item.id}`
+      : item.media_type === "tv"
+      ? `/show/${item.id}`
+      : `/person/${item.id}`;
 
-  console.log(item);
+  console.log("these are the items", item);
 
   return (
     <Link href={link}>

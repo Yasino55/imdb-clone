@@ -58,6 +58,25 @@ export async function fetchSingleInfo(id: string, type: string) {
   }
 }
 
+export async function fetchPersonInfo(id: string) {
+  try {
+    const res = await fetch(`${apiDomain}/person/${id}`, {
+      cache: "no-store",
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      throw new Error("failed to fetch data");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", { status: 400 });
+    return null;
+  }
+}
+
 export async function getExternalId(type: string, id: string) {
   const options = {
     headers: {
