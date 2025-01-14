@@ -32,7 +32,7 @@ const SinglePersonInfo = ({ item }: Props) => {
           />
         </div>
 
-        <div className='flex flex-col gap-10 w-full'>
+        <div className='flex flex-col gap-5 w-full'>
           <h1 className='text-4xl md:text-5xl font-medium'>{item.name}</h1>
           <div className='flex flex-col gap-1'>
             <p>- {item.place_of_birth}</p>

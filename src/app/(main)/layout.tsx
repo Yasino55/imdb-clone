@@ -10,13 +10,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='max-w-7xl px-5 mx-auto '>
-        <ThemeProvider attribute='class' defaultTheme='dark'>
-          <SessionProvider>
+      <body>
+        <div className='max-w-7xl px-5 mx-auto '>
+          <ThemeProvider attribute='class' defaultTheme='dark'>
             <Navbar />
-            {children}
-          </SessionProvider>
-        </ThemeProvider>
+            <SessionProvider>{children}</SessionProvider>
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   );

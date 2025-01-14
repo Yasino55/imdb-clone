@@ -1,5 +1,5 @@
 import { fetchSingleInfo } from "@/lib/requests";
-import SingleInfo from "@/components/SingleInfo";
+import MovieInfoPage from "@/components/movies/MovieInfoPage";
 
 interface Props {
   id: string;
@@ -13,6 +13,6 @@ const MoviePage = async (props: Params) => {
   const params = await props.params;
   const movie = await fetchSingleInfo(params.id, "movie");
 
-  return <SingleInfo item={movie} />;
+  return <MovieInfoPage item={movie} />;
 };
 export default MoviePage;

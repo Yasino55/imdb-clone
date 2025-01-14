@@ -29,7 +29,7 @@ const CardInfo = ({ item }: Props) => {
     item.media_type === "movie" ? `/movie/${item.id}` : `/show/${item.id}`;
 
   return (
-    <Card className='bg-secondary' key={item.id}>
+    <Card className='bg-secondary w-[210px]' key={item.id}>
       {imageLoaded && <CardSkeleton />}
       <Link href={link}>
         <Image

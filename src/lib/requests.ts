@@ -1,5 +1,4 @@
-import { auth } from "@/auth";
-
+import { format } from "date-fns";
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 
 // Fetch Top movies of the current week
@@ -55,6 +54,65 @@ export async function fetchSingleInfo(id: string, type: string) {
   } catch (error) {
     console.error("Error fetching data:", { status: 400 });
     return null;
+  }
+}
+
+export async function fetchTvSeasons(id: string) {
+  const options = {
+    headers: {
+      accept: "application/json",
+      Authorization: process.env.TMDB_BEARER_KEY as string,
+      cache: "no-store",
+    },
+  };
+
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
+      options
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return new Response("Failed to fetch data", {
+      status: 500,
+    });
+  }
+}
+
+export async function fetchTvEpisodes(id: string, seasonNumber: string) {
+  const options = {
+    headers: {
+      method: "GET",
+      accept: "application/json",
+      Authorization: process.env.TMDB_BEARER_KEY as string,
+      cache: "no-store",
+    },
+  };
+
+  try {
+    const res = await fetch(
+      `${apiDomain}/tvEpisodes?id=${id}&season=${seasonNumber}`,
+      options
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await res.json();
+    return data.episodes;
+  } catch (error) {
+    console.log(error);
+    return new Response("Failed to fetch data", {
+      status: 500,
+    });
   }
 }
 
@@ -156,4 +214,8 @@ export function backdropFormat(backdrop_path: string) {
 
 export const formatRating = (rating: number) => {
   return rating.toFixed(1);
+};
+
+export const formatDate = (date: string) => {
+  return format(new Date(date), "dd-MMM-yyyy").replace(/-/g, " ");
 };
