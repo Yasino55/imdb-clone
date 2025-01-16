@@ -19,6 +19,7 @@ interface Props {
 }
 
 const SinglePersonInfo = ({ item }: Props) => {
+  console.log(item);
   return (
     <>
       <div className='flex flex-col mt-[50px] pb-10 gap-5 md:flex-row md:space-x-10'>
@@ -35,16 +36,22 @@ const SinglePersonInfo = ({ item }: Props) => {
         <div className='flex flex-col gap-5 w-full'>
           <h1 className='text-4xl md:text-5xl font-medium'>{item.name}</h1>
           <div className='flex flex-col gap-1'>
-            <p>- {item.place_of_birth}</p>
-            <p>- {item.birthday}</p>
+            <p>{item.place_of_birth}</p>
+            <p>{item.birthday}</p>
             <p>
-              -{" "}
+              {" "}
               {item.known_for_department === "Acting"
                 ? "Actor"
                 : item.known_for_department}
             </p>
             <div>
-              <Accordion type='single' collapsible className='w-full'>
+              <Accordion
+                type='single'
+                collapsible
+                className={`w-full ${
+                  item.biography === "" ? "hidden" : "block"
+                }`}
+              >
                 <AccordionItem value='item-1'>
                   <AccordionTrigger className='text-xl'>
                     Biography

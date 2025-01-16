@@ -6,7 +6,6 @@ import {
   formatRating,
   posterFormat,
 } from "@/lib/requests";
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardTitle } from "../ui/card";
 import Image from "next/image";
@@ -95,7 +94,7 @@ const TvSeasons = ({ data, id }: Props) => {
                 alt='poster'
                 width={500}
                 height={0}
-                className='  rounded-t-md'
+                className='rounded-t-md'
               />
             ) : (
               <div className='flex items-center justify-center w-full h-[140px] border-solid border-2 border-slate-500'>

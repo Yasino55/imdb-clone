@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import { fetchTvSeasons, formatRating, posterFormat } from "@/lib/requests";
+import { formatRating, posterFormat } from "@/lib/requests";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import MovieCast from "./MovieCast";
 
 interface Props {
   item: {
@@ -40,9 +41,9 @@ const MovieInfoPage = async ({ item }: Props) => {
         <div className='flex flex-col gap-5 w-full'>
           <h1 className='text-4xl font-medium md:text-5xl'>{item.title}</h1>
           <div className='flex flex-col gap-1'>
-            <p>- {item.media_type}</p>
+            <p>Movie</p>
 
-            <p>- {item.release_date}</p>
+            <p>{item.release_date}</p>
           </div>
 
           <div className='flex items-center'>
@@ -63,6 +64,9 @@ const MovieInfoPage = async ({ item }: Props) => {
             </Accordion>
           </div>
         </div>
+      </div>
+      <div>
+        <MovieCast id={item.id} />
       </div>
     </>
   );

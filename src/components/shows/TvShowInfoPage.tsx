@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import TvSeasons from "@/components/shows/TvSeasons";
+import TvShowCast from "./TvShowCast";
 
 interface Props {
   item: {
@@ -25,11 +26,10 @@ interface Props {
 
 const TvShowInfoPage = async ({ item }: Props) => {
   const data = await fetchTvSeasons(item.id);
-  const seasons = data.seasons;
   // console.log(seasons);
   return (
-    <>
-      <div className='flex flex-col mt-[50px] md:px-10  gap-10 md:flex-row md:space-x-10'>
+    <div className='space-y-10'>
+      <div className='flex flex-col mt-[50px] gap-10 md:px-10 md:flex-row md:space-x-10'>
         <div className='flex items-center justify-center'>
           <Image
             src={posterFormat(item.poster_path as string)}
@@ -68,11 +68,11 @@ const TvShowInfoPage = async ({ item }: Props) => {
           </div>
         </div>
       </div>
-
-      <div className='mt-10'>
-        <TvSeasons data={seasons} id={item.id} />
+      <div className='space-y-10'>
+        <TvSeasons data={data} id={item.id} />
+        <TvShowCast id={item.id} />
       </div>
-    </>
+    </div>
   );
 };
 export default TvShowInfoPage;
