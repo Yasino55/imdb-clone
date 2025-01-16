@@ -1,5 +1,5 @@
 import { fetchPersonInfo } from "@/lib/requests";
-import SinglePersonInfo from "@/components/SinglePersonInfo";
+import SinglePersonInfo from "@/components/person/SinglePersonInfo";
 
 interface Props {
   id: string;

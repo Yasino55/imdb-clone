@@ -5,10 +5,12 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion";
+} from "@/components/ui/accordion";
+import PersonCredits from "./PersonCredits";
 
 interface Props {
   item: {
+    id: string;
     profile_path: string;
     name: string;
     place_of_birth: string;
@@ -19,10 +21,9 @@ interface Props {
 }
 
 const SinglePersonInfo = ({ item }: Props) => {
-  console.log(item);
   return (
-    <>
-      <div className='flex flex-col mt-[50px] pb-10 gap-5 md:flex-row md:space-x-10'>
+    <div className='space-y-10'>
+      <div className='flex flex-col mt-[50px] gap-5 md:flex-row md:space-x-10'>
         <div className='flex items-center justify-center'>
           <Image
             src={posterFormat(item.profile_path)}
@@ -63,7 +64,10 @@ const SinglePersonInfo = ({ item }: Props) => {
           </div>
         </div>
       </div>
-    </>
+      <div>
+        <PersonCredits id={item.id} />
+      </div>
+    </div>
   );
 };
 

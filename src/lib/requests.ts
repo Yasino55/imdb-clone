@@ -164,6 +164,36 @@ export async function fetchPersonInfo(id: string) {
   }
 }
 
+export async function fetchPersonCredits(id: string, type: string) {
+  const options = {
+    headers: {
+      method: "GET",
+      accept: "application/json",
+      Authorization: process.env.TMDB_BEARER_KEY as string,
+      cache: "no-store",
+    },
+  };
+
+  try {
+    const res = await fetch(
+      `${apiDomain}/person/credits?id=${id}&type=${type}`,
+      options
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await res.json();
+    return data.cast;
+  } catch (error) {
+    console.log(error);
+    return new Response("Failed to fetch data", {
+      status: 500,
+    });
+  }
+}
+
 export async function getExternalId(type: string, id: string) {
   const options = {
     headers: {

@@ -47,7 +47,6 @@ const TvSeasons = ({ data, id }: Props) => {
 
   useEffect(() => {
     if (selectedSeason) {
-      console.log(selectedSeason);
       const fetchEpisodes = async () => {
         try {
           const fetchedEpisodes = await fetchTvEpisodes(id, selectedSeason);
