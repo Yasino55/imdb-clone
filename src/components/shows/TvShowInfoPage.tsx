@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import TvSeasons from "@/components/shows/TvSeasons";
 import TvShowCast from "./TvShowCast";
+import ToggleCastSeasons from "./toggleCastSeason";
 
 interface Props {
   item: {
@@ -68,10 +69,13 @@ const TvShowInfoPage = async ({ item }: Props) => {
           </div>
         </div>
       </div>
-      <div className='space-y-10'>
+      <div>
+        <ToggleCastSeasons id={item.id} data={data} />
+      </div>
+      {/* <div className='space-y-10'>
         <TvSeasons data={data} id={item.id} />
         <TvShowCast id={item.id} />
-      </div>
+      </div> */}
     </div>
   );
 };

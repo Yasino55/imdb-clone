@@ -20,9 +20,39 @@ export async function fetchTopMovies() {
   }
 }
 
+// export async function fetchCast(id: string, type: string) {
+//   const options = {
+//     headers: {
+//       accept: "application/json",
+//       Authorization: process.env.TMDB_BEARER_KEY as string,
+//       cache: "no-store",
+//     },
+//   };
+
+//   try {
+//     const res = await fetch(
+//       `https://api.themoviedb.org/3/${type}/${id}/credits?language=en-US`,
+//       options
+//     );
+
+//     if (!res.ok) {
+//       throw new Error("Failed to fetch data");
+//     }
+
+//     const data = await res.json();
+//     return data.cast;
+//   } catch (error) {
+//     console.log(error);
+//     return new Response("Failed to fetch data", {
+//       status: 500,
+//     });
+//   }
+// }
+
 export async function fetchCast(id: string, type: string) {
   const options = {
     headers: {
+      method: "GET",
       accept: "application/json",
       Authorization: process.env.TMDB_BEARER_KEY as string,
       cache: "no-store",
@@ -30,10 +60,7 @@ export async function fetchCast(id: string, type: string) {
   };
 
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}/credits?language=en-US`,
-      options
-    );
+    const res = await fetch(`${apiDomain}/cast?id=${id}&type=${type}`, options);
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");

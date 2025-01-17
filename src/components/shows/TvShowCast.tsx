@@ -1,8 +1,10 @@
+"use client";
 import { fetchCast, posterFormat } from "@/lib/requests";
 import { Card, CardContent, CardTitle } from "../ui/card";
 import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface Props {
   id: string;
@@ -12,13 +14,25 @@ interface Props {
   known_for_department: string;
 }
 
-const TvShowCast = async ({ id }: { id: string }) => {
-  const data = await fetchCast(id, "tv");
+const TvShowCast = ({ id }: { id: string }) => {
+  const [cast, setCast] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchTvCast = async () => {
+      try {
+        const data = await fetchCast(id, "tv");
+        setCast(data);
+      } catch (error) {
+        console.error("Error fetching episodes:", error);
+      }
+    };
+    fetchTvCast();
+  }, [id]);
+
   return (
-    <div className='flex flex-col items-center gap-10'>
-      <h2 className='text-2xl font-semibold'>Cast</h2>
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10'>
-        {data.map((cast: Props) => (
+    <div className=''>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-10'>
+        {cast.map((cast: Props) => (
           <Card className=' w-[px]' key={cast.id}>
             {cast.profile_path ? (
               <Link href={`/person/${cast.id}`}>

@@ -57,12 +57,12 @@ const TvSeasons = ({ data, id }: Props) => {
       };
       fetchEpisodes();
     }
-  }, [selectedSeason]);
+  }, [selectedSeason, id]);
 
   return (
-    <div className='space-y-10 flex flex-col items-center'>
-      <div className='flex flex-col items-center gap-3'>
-        <p className='text-lg text-muted-foreground font-semibold'>Seasons:</p>
+    <div className='flex flex-col'>
+      <div className='flex items-center gap-3 my-10'>
+        <p className='text-lg text-muted-foreground font-semibold '>Season:</p>
         <Select onValueChange={(value) => setSelectedSeason(value)}>
           <SelectTrigger className='w-[100px]'>
             <SelectValue placeholder='1' />
@@ -86,7 +86,7 @@ const TvSeasons = ({ data, id }: Props) => {
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
         {episodes.map((episode: Episode) => (
-          <Card key={episode.id} className='w-[250px]'>
+          <Card key={episode.id} className=''>
             {episode.still_path ? (
               <Image
                 src={posterFormat(episode.still_path)}
@@ -124,7 +124,7 @@ const TvSeasons = ({ data, id }: Props) => {
                   </p>
                 </div>
               </div>
-              <p className='line-clamp-4'>{episode.overview}</p>
+              <p className='line-clamp-5'>{episode.overview}</p>
             </CardContent>
           </Card>
         ))}
