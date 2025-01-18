@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import SearchInput from "./SearchInput";
 import NavbarButtons from "./header/NavbarButtons";
 import NavbarDropdown from "./header/NavbarDropdown";
+import UserButton from "./header/UserButton";
 
 const Navbar = async () => {
   const session = await auth();
@@ -18,12 +19,20 @@ const Navbar = async () => {
       </Link>
       <div className='flex gap-3'>
         <SearchInput />
-        <div className='hidden md:block'>
-          <NavbarButtons />
-        </div>
-        <div className='md:hidden'>
-          <NavbarDropdown />
-        </div>
+        {session ? (
+          <div className=''>
+            <UserButton />
+          </div>
+        ) : (
+          <div>
+            <div className='md:hidden'>
+              <NavbarDropdown />
+            </div>
+            <div className='hidden md:block'>
+              <NavbarButtons />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

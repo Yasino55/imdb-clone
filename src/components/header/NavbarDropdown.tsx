@@ -18,29 +18,13 @@ const NavbarDropdown = async () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className='fixed w-36 h-28 mt-3 mr-5 right-[0px] z-10 p-3 flex justify-center items-center'>
           <div className=''>
-            {session ? (
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
-                <Button type='submit'>Sign Out</Button>
-              </form>
-            ) : (
-              <div className='space-y-3'>
-                <div>
-                  <Button className='w-[75px]' asChild>
-                    <Link href='sign-in'>Sign In</Link>
-                  </Button>
-                </div>
-                <div>
-                  <Button className='w-[75px]' asChild variant={"outline"}>
-                    <Link href='sign-up'>Sign Up</Link>
-                  </Button>
-                </div>
+            <div className='space-y-3'>
+              <div>
+                <Button className='w-[75px]' asChild>
+                  <Link href='sign-in'>Sign In</Link>
+                </Button>
               </div>
-            )}
+            </div>
           </div>
         </DropdownMenuContent>
       </DropdownMenu>

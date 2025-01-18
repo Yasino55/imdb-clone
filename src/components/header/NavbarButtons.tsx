@@ -23,11 +23,6 @@ const NavbarButtons = async () => {
               <Button>Sign In</Button>
             </Link>
           </div>
-          <div>
-            <Link href='/sign-up'>
-              <Button variant={"outline"}>Sign Up</Button>
-            </Link>
-          </div>
         </div>
       )}
     </div>
