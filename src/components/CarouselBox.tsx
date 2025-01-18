@@ -21,7 +21,7 @@ interface CarouselProps {
 
 const CarouselBox = ({ data, children }: CarouselProps) => {
   return (
-    <Carousel>
+    <Carousel className='w-full'>
       <CarouselContent>
         {data
           ? data.map((item: Props) => (
@@ -31,8 +31,10 @@ const CarouselBox = ({ data, children }: CarouselProps) => {
             ))
           : null}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <div className='hidden md:block'>
+        <CarouselPrevious />
+        <CarouselNext />
+      </div>
     </Carousel>
   );
 };
