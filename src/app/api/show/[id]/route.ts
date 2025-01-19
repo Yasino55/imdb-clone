@@ -11,10 +11,11 @@ export const GET = async (request: any, props: any) => {
   };
 
   const externalId = await getExternalId("tv", params.id);
+  const { external_id, source } = externalId;
 
   try {
     const show = await fetch(
-      `https://api.themoviedb.org/3/find/${externalId}?external_source=wikidata_id`,
+      `https://api.themoviedb.org/3/find/${external_id}?external_source=${source}`,
       options
     );
 
@@ -23,7 +24,7 @@ export const GET = async (request: any, props: any) => {
     }
 
     const data = await show.json();
-    return new Response(JSON.stringify(data), {
+    return new Response(JSON.stringify(data.tv_results[0]), {
       status: 200,
     });
   } catch (error) {

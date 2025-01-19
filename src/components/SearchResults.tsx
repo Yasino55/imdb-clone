@@ -26,8 +26,6 @@ const SearchResults = ({ item }: Props) => {
       ? `/show/${item.id}`
       : `/person/${item.id}`;
 
-  console.log("these are the items", item);
-
   return (
     <Link href={link}>
       <div className='flex m-2' key={item.id}>
