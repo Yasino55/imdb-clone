@@ -54,7 +54,7 @@ const UserButton = async () => {
             <form
               action={async () => {
                 "use server";
-                await signOut({ redirectTo: "/" });
+                await signOut({ redirectTo: "/signing-out" });
               }}
               className='w-full'
             >
