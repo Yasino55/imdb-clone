@@ -1,3 +1,4 @@
+import { prisma } from "@/prisma";
 import { format } from "date-fns";
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 
@@ -189,6 +190,46 @@ export async function fetchPersonCredits(id: string, type: string) {
     return new Response("Failed to fetch data", {
       status: 500,
     });
+  }
+}
+
+export async function getWatchList(id: string) {
+  const data = await prisma.favorite.findMany({
+    where: {
+      userId: id,
+    },
+  });
+
+  return JSON.parse(JSON.stringify(data));
+}
+
+export async function fetchMovieAndTvDetails(id: string, type: string) {
+  const options = {
+    headers: {
+      accept: "application/json",
+      Authorization: process.env.TMDB_BEARER_KEY as string,
+      cache: "no-store",
+    },
+  };
+
+  const externalId = await getExternalId(type, id);
+  const { external_id, source } = externalId;
+
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/find/${external_id}?external_source=${source}`,
+      options
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await res.json();
+    return data.tv_results[0] || data.movie_results[0];
+  } catch (error) {
+    console.log(error);
+    throw new Error("failed to fetch external id");
   }
 }
 

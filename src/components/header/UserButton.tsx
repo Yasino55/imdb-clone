@@ -27,7 +27,7 @@ const UserButton = async () => {
   const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "U";
 
   return (
-    <div className='flex gap-2 items-center'>
+    <div className='flex gap-2'>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className='flex items-center'>
@@ -50,7 +50,7 @@ const UserButton = async () => {
               </div>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuItem className='p-0 mb-1'>
+          <DropdownMenuItem className='p-0'>
             <form
               action={async () => {
                 "use server";
@@ -58,13 +58,19 @@ const UserButton = async () => {
               }}
               className='w-full'
             >
-              <Button
-                className='w-full py-4 px-2 h-4 justify-start'
-                variant='ghost'
-              >
+              <Button className='w-full px-2 justify-start' variant='ghost'>
                 Sign Out
               </Button>
             </form>
+          </DropdownMenuItem>
+          <DropdownMenuItem className='p-0'>
+            <Button
+              className='w-full justify-start px-2'
+              variant='ghost'
+              asChild
+            >
+              <Link href='/watch-list'>Watch list</Link>
+            </Button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

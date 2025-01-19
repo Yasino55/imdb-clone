@@ -24,3 +24,5 @@ export const apiAuthRoutes = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/";
+
+export const loggedInRoute = "/watch-list";
