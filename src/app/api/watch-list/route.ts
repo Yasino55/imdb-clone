@@ -16,7 +16,6 @@ export async function GET(req: NextRequest) {
       const itemId = req.nextUrl.searchParams.get("itemId");
 
       if (!itemId) {
-        // return {error: "Something went wrong try again later please."}
         return NextResponse.json(
           { message: "Item ID is required." },
           { status: 400 }
@@ -94,20 +93,26 @@ export async function DELETE(req: NextRequest) {
     const session = await auth();
 
     if (!session) {
-      return { error: "You must be logged in to remove from watch list." };
-      // return NextResponse.json(
-      //   { message: "You must be logged in." },
-      //   { status: 401 }
-      // );
+      return NextResponse.json(
+        { message: "You must be logged in." },
+        { status: 401 }
+      );
     }
 
     const { user } = session;
     const { itemId } = await req.json();
 
+    if (!itemId) {
+      return NextResponse.json(
+        { message: "Item ID is required." },
+        { status: 400 }
+      );
+    }
+
     await prisma.favorite.deleteMany({
       where: {
         userId: user?.id,
-        itemId: itemId,
+        itemId: parseInt(itemId, 10),
       },
     });
 
