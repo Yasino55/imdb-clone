@@ -45,6 +45,27 @@ export default {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.sub = user.id;
+        token.name = user.name;
+        token.email = user.email;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.sub) {
+        session.user = {
+          ...session.user,
+          id: token.sub,
+          name: token.name || session.user.name,
+          email: token.email || session.user.email,
+        };
+      }
+      return session;
+    },
+  },
   pages: {
     signIn: "/sign-in",
   },
