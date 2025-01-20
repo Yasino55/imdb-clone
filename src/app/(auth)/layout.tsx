@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div className='p-2'>
+      <div className='p-2 absolute'>
         <Link href='/'>
           <div className='flex items-center justify-center h-[35px] w-[75px] rounded-sm bg-primary'>
             <h1 className='text-xl font-bold'>IMDb</h1>
