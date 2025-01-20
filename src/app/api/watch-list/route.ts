@@ -5,41 +5,41 @@ import { auth } from "@/auth";
 export async function GET(req: NextRequest) {
   const session = await auth();
 
-  if (!session || !session.user) {
+  if (!session || !session.user || !session.user.id) {
     return NextResponse.json(
       { message: "You must be logged in to view the watch list." },
       { status: 401 }
     );
-  } else {
-    try {
-      const user = session.user;
-      const itemId = req.nextUrl.searchParams.get("itemId");
+  }
 
-      if (!itemId) {
-        return NextResponse.json(
-          { message: "Item ID is required." },
-          { status: 400 }
-        );
-      }
+  try {
+    const user = session.user;
+    const itemId = req.nextUrl.searchParams.get("itemId");
 
-      // Check if the item is in the watch list
-      const existingWatchList = await prisma.favorite.findFirst({
-        where: {
-          userId: user.id,
-          itemId: parseInt(itemId),
-        },
-      });
-
-      const isInWatchList = !!existingWatchList;
-
-      return NextResponse.json({ isInWatchList }, { status: 200 });
-    } catch (error) {
-      console.error("Error checking watch list status:", error);
+    if (!itemId) {
       return NextResponse.json(
-        { error: "Internal server error while checking watch list status." },
-        { status: 500 }
+        { message: "Item ID is required." },
+        { status: 400 }
       );
     }
+
+    // Check if the item is in the watch list
+    const existingWatchList = await prisma.favorite.findFirst({
+      where: {
+        userId: user.id,
+        itemId: parseInt(itemId),
+      },
+    });
+
+    const isInWatchList = !!existingWatchList;
+
+    return NextResponse.json({ isInWatchList }, { status: 200 });
+  } catch (error) {
+    console.error("Error checking watch list status:", error);
+    return NextResponse.json(
+      { error: "Internal server error while checking watch list status." },
+      { status: 500 }
+    );
   }
 }
 

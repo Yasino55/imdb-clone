@@ -48,6 +48,10 @@ export const credentialLogin = async (values: z.infer<typeof SignInSchema>) => {
       redirect: false,
     });
 
+    if (response?.error) {
+      return { error: response.error };
+    }
+
     return response;
   } catch (error) {
     console.log("Error signing in:", error);
