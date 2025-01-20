@@ -5,10 +5,12 @@ import TopShowsCarousel from "@/components/shows/TopShowsCarousel";
 const home = () => {
   return (
     <div>
-      <main className='space-y-20 mb-10'>
+      <main>
         <Hero />
-        <TopMoviesCarousel />
-        <TopShowsCarousel />
+        <div className='space-y-20'>
+          <TopMoviesCarousel />
+          <TopShowsCarousel />
+        </div>
       </main>
     </div>
   );

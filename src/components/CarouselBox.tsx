@@ -21,11 +21,11 @@ interface CarouselProps {
 
 const CarouselBox = ({ data, children }: CarouselProps) => {
   return (
-    <Carousel className='w-full'>
+    <Carousel className=''>
       <CarouselContent>
         {data
           ? data.map((item: Props) => (
-              <CarouselItem key={item.id} className='basis-1/1'>
+              <CarouselItem key={item.id} className='basis-1/1 w-[210px]'>
                 {children(item)}
               </CarouselItem>
             ))

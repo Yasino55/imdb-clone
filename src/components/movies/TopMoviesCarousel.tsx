@@ -8,7 +8,7 @@ const TopMoviesCarousel = async () => {
   const moviesData = data.slice(0, 10);
 
   return (
-    <div>
+    <div className='space-y-5'>
       <div className='flex items-center justify-between'>
         <h3 className='text-muted-foreground text-xl font-semibold'>
           Top 10 Movies This Week
@@ -17,7 +17,7 @@ const TopMoviesCarousel = async () => {
           View All
         </Link>
       </div>
-      <div className='container mt-5'>
+      <div>
         <CarouselBox data={moviesData}>
           {(movie) => <CardInfo item={movie} />}
         </CarouselBox>

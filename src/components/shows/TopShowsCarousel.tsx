@@ -8,7 +8,7 @@ const TopShowsCarousel = async () => {
   const showsData = data.slice(0, 10);
 
   return (
-    <div>
+    <div className='space-y-5'>
       <div className='flex items-center justify-between'>
         <h3 className='text-muted-foreground text-xl font-semibold'>
           Top 10 Shows This Week
@@ -17,7 +17,7 @@ const TopShowsCarousel = async () => {
           View All
         </Link>
       </div>
-      <div className='container mt-5'>
+      <div>
         <CarouselBox data={showsData}>
           {(show) => <CardInfo item={show} />}
         </CarouselBox>

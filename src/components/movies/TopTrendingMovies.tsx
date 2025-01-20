@@ -1,6 +1,5 @@
 import { fetchTopMovies } from "@/lib/requests";
 import CardInfo from "@/components/CardInfo";
-import { Pagination } from "@/components/ui/pagination";
 
 interface Props {
   id: number;
@@ -15,16 +14,17 @@ const TopTrendingMovies = async () => {
   const movies = await fetchTopMovies();
 
   return (
-    <div className=''>
+    <div>
       <h2 className='text-xl font-semibold mt-20 text-center md:text-2xl'>
         Top Trending Movies This Week
       </h2>
 
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-7 lg:grid-cols-4 xl:grid-cols-5 mt-5'>
         {movies.map((movie: Props) => (
-          <CardInfo key={movie.id} item={movie} />
+          <div className='min-w-[100px] md:min-w-[210px]' key={movie.id}>
+            <CardInfo item={movie} />
+          </div>
         ))}
-        <Pagination />
       </div>
     </div>
   );
