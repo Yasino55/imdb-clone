@@ -25,7 +25,7 @@ const SocialLogin = () => {
       }
     }
     router.replace("/sign-in");
-  }, [error, router]);
+  }, [linkError, router]);
 
   return (
     <>
