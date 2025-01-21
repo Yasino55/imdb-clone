@@ -6,7 +6,7 @@ const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 export async function fetchTopMovies() {
   try {
     const res = await fetch(`${apiDomain}/top-movies`, {
-      cache: "no-store",
+      next: { revalidate: 3600 },
       method: "GET",
     });
 
@@ -19,6 +19,7 @@ export async function fetchTopMovies() {
   } catch (error) {
     console.log(error);
     console.error("Error fetching data:", { status: 400 });
+    return null;
   }
 }
 
@@ -52,7 +53,7 @@ export async function fetchCast(id: string, type: string) {
 export async function fetchTopShows() {
   try {
     const res = await fetch(`${apiDomain}/top-shows`, {
-      cache: "no-store",
+      next: { revalidate: 3600 },
       method: "GET",
     });
 
@@ -65,6 +66,7 @@ export async function fetchTopShows() {
   } catch (error) {
     console.log(error);
     console.error("Error fetching data:", { status: 400 });
+    return null;
   }
 }
 

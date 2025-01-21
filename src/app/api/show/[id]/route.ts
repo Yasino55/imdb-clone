@@ -6,7 +6,7 @@ export const GET = async (request: Request, props: any) => {
     headers: {
       accept: "application/json",
       Authorization: process.env.TMDB_BEARER_KEY as string,
-      cache: "no-store",
+      cache: "force-cache",
     },
   };
 
