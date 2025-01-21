@@ -17,7 +17,8 @@ export async function fetchTopMovies() {
     const movies = await res.json();
     return movies.results;
   } catch (error) {
-    console.error("Error fetchin data:", { status: 400 });
+    console.log(error);
+    console.error("Error fetching data:", { status: 400 });
   }
 }
 
@@ -62,6 +63,7 @@ export async function fetchTopShows() {
     const movies = await res.json();
     return movies.results;
   } catch (error) {
+    console.log(error);
     console.error("Error fetching data:", { status: 400 });
   }
 }
@@ -80,8 +82,8 @@ export async function fetchSingleInfo(id: string, type: string) {
     const data = await res.json();
     return data;
   } catch (error) {
+    console.log(error);
     console.error("Error fetching data:", { status: 400 });
-    return null;
   }
 }
 
@@ -158,8 +160,8 @@ export async function fetchPersonInfo(id: string) {
     const data = await res.json();
     return data;
   } catch (error) {
+    console.log(error);
     console.error("Error fetching data:", { status: 400 });
-    return null;
   }
 }
 

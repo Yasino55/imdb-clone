@@ -1,10 +1,4 @@
-interface Props {
-  params: {
-    id: string;
-  };
-}
-
-export const GET = async (request: Request, props: Props) => {
+export const GET = async (request: Request, props: any) => {
   const params = await props.params;
   const options = {
     headers: {

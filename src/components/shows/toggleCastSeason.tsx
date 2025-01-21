@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import TvSeasons from "./TvSeasons";
 import TvShowCast from "./TvShowCast";

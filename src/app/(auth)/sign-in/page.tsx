@@ -3,7 +3,7 @@ import SocialLogin from "@/components/auth/SocialLogin";
 import Link from "next/link";
 import { Suspense } from "react";
 
-const SignInPage = async () => {
+const SignInPage = () => {
   return (
     <Suspense>
       <div className='flex flex-col justify-center items-center h-screen'>
@@ -13,7 +13,7 @@ const SignInPage = async () => {
           <SocialLogin />
           <div className='mt-2 text-center'>
             <p className='font-semibold text-muted-foreground'>
-              Don't have an account?
+              Don&apos;t have an account?
               <Link href='/sign-up' className='underline ml-1'>
                 Sign Up
               </Link>
