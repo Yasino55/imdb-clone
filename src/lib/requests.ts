@@ -29,7 +29,7 @@ export async function fetchCast(id: string, type: string) {
       method: "GET",
       accept: "application/json",
       Authorization: process.env.TMDB_BEARER_KEY as string,
-      cache: "no-store",
+      cache: "force-cache",
     },
   };
 
@@ -73,7 +73,7 @@ export async function fetchTopShows() {
 export async function fetchSingleInfo(id: string, type: string) {
   try {
     const res = await fetch(`${apiDomain}/${type}/${id}`, {
-      cache: "no-store",
+      cache: "force-cache",
       method: "GET",
     });
 
@@ -151,7 +151,7 @@ export async function fetchTvEpisodes(id: string, seasonNumber: string) {
 export async function fetchPersonInfo(id: string) {
   try {
     const res = await fetch(`${apiDomain}/person/${id}`, {
-      cache: "no-store",
+      cache: "force-cache",
       method: "GET",
     });
 
@@ -173,7 +173,7 @@ export async function fetchPersonCredits(id: string, type: string) {
       method: "GET",
       accept: "application/json",
       Authorization: process.env.TMDB_BEARER_KEY as string,
-      cache: "no-store",
+      cache: "force-cache",
     },
   };
 
@@ -212,7 +212,7 @@ export async function fetchMovieAndTvDetails(id: string, type: string) {
     headers: {
       accept: "application/json",
       Authorization: process.env.TMDB_BEARER_KEY as string,
-      cache: "no-store",
+      cache: "force-cache",
     },
   };
 
@@ -242,7 +242,7 @@ export async function getExternalId(type: string, id: string) {
     headers: {
       accept: "application/json",
       Authorization: process.env.TMDB_BEARER_KEY as string,
-      cache: "no-store",
+      cache: "force-cache",
     },
   };
 
@@ -272,7 +272,7 @@ export async function getExternalId(type: string, id: string) {
 export async function searchMoviesAndShows(query: string, path: string) {
   try {
     const res = await fetch(`${apiDomain}/${path}?name=${query}`, {
-      cache: "no-store",
+      cache: "force-cache",
       method: "GET",
     });
 
@@ -290,7 +290,7 @@ export async function searchMoviesAndShows(query: string, path: string) {
 export async function handleSearch(query: string) {
   try {
     const res = await fetch(`${apiDomain}/search?name=${query}`, {
-      cache: "no-store",
+      cache: "force-cache",
       method: "GET",
     });
 
