@@ -20,7 +20,7 @@ interface Props {
 
 const PersonCredits = ({ id }: { id: string }) => {
   const [selectedType, setSelectedType] = useState<string>("movie");
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (selectedType) {
@@ -34,7 +34,7 @@ const PersonCredits = ({ id }: { id: string }) => {
       };
       fetchEpisodes();
     }
-  }, [selectedType]);
+  }, [id, selectedType]);
 
   return (
     <div className='space-y-8'>

@@ -6,7 +6,7 @@ import { Suspense } from "react";
 const SignInPage = async () => {
   return (
     <Suspense>
-      <div className='flex flex-col justify-center items-center h-screen '>
+      <div className='flex flex-col justify-center items-center h-screen'>
         <h1 className='text-3xl my-3'>Sign In</h1>
         <div className='w-[300px]'>
           <SignInForm />

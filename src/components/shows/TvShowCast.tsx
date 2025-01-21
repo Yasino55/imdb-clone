@@ -15,7 +15,7 @@ interface Props {
 }
 
 const TvShowCast = ({ id }: { id: string }) => {
-  const [cast, setCast] = useState<any>([]);
+  const [cast, setCast] = useState([]);
 
   useEffect(() => {
     const fetchTvCast = async () => {

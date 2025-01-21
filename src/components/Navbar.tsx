@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { signOut } from "@/auth";
 import { auth } from "@/auth";
 import SearchInput from "./SearchInput";
 import NavbarButtons from "./header/NavbarButtons";

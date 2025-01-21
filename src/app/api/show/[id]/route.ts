@@ -1,6 +1,12 @@
 import { getExternalId } from "@/lib/requests";
 
-export const GET = async (request: any, props: any) => {
+interface Props {
+  params: {
+    id: string;
+  };
+}
+
+export const GET = async (request: Request, props: Props) => {
   const params = await props.params;
   const options = {
     headers: {

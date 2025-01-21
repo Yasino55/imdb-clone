@@ -43,7 +43,7 @@ interface Episode {
 
 const TvSeasons = ({ data, id }: Props) => {
   const [selectedSeason, setSelectedSeason] = useState<string>("1");
-  const [episodes, setEpisodes] = useState<any>([]);
+  const [episodes, setEpisodes] = useState([]);
 
   useEffect(() => {
     if (selectedSeason) {
