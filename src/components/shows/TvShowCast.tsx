@@ -33,7 +33,7 @@ const TvShowCast = ({ id }: { id: string }) => {
     <div className=''>
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-10'>
         {cast.map((cast: Props) => (
-          <Card className=' w-[px]' key={cast.id}>
+          <Card key={cast.id}>
             {cast.profile_path ? (
               <Link href={`/person/${cast.id}`}>
                 <Image
